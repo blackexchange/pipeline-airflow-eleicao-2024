@@ -1,0 +1,143 @@
+[2024-10-17T13:24:44.247+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2024-10-17T13:24:44.264+0000] {taskinstance.py:2612} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: pipeline_cadastro_de_zonas.generate_parquet manual__2024-10-17T13:24:36.518279+00:00 [queued]>
+[2024-10-17T13:24:44.274+0000] {taskinstance.py:2612} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: pipeline_cadastro_de_zonas.generate_parquet manual__2024-10-17T13:24:36.518279+00:00 [queued]>
+[2024-10-17T13:24:44.274+0000] {taskinstance.py:2865} INFO - Starting attempt 1 of 2
+[2024-10-17T13:24:44.289+0000] {taskinstance.py:2888} INFO - Executing <Task(PythonOperator): generate_parquet> on 2024-10-17 13:24:36.518279+00:00
+[2024-10-17T13:24:44.296+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=105) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2024-10-17T13:24:44.298+0000] {standard_task_runner.py:72} INFO - Started process 107 to run task
+[2024-10-17T13:24:44.298+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'pipeline_cadastro_de_zonas', 'generate_parquet', 'manual__2024-10-17T13:24:36.518279+00:00', '--job-id', '20', '--raw', '--subdir', 'DAGS_FOLDER/cadastro_de_zonas_dag.py', '--cfg-path', '/tmp/tmpyzp2rp28']
+[2024-10-17T13:24:44.299+0000] {standard_task_runner.py:105} INFO - Job 20: Subtask generate_parquet
+[2024-10-17T13:24:44.346+0000] {task_command.py:467} INFO - Running <TaskInstance: pipeline_cadastro_de_zonas.generate_parquet manual__2024-10-17T13:24:36.518279+00:00 [running]> on host a67bc20bf3f9
+[2024-10-17T13:24:44.437+0000] {taskinstance.py:3131} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='pipeline_cadastro_de_zonas' AIRFLOW_CTX_TASK_ID='generate_parquet' AIRFLOW_CTX_EXECUTION_DATE='2024-10-17T13:24:36.518279+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-10-17T13:24:36.518279+00:00'
+[2024-10-17T13:24:44.440+0000] {logging_mixin.py:190} INFO - Task instance is in running state
+[2024-10-17T13:24:44.441+0000] {logging_mixin.py:190} INFO -  Previous state of the Task instance: queued
+[2024-10-17T13:24:44.441+0000] {logging_mixin.py:190} INFO - Current task name:generate_parquet state:running start_date:2024-10-17 13:24:44.264867+00:00
+[2024-10-17T13:24:44.442+0000] {logging_mixin.py:190} INFO - Dag name:pipeline_cadastro_de_zonas and current dag run status:running
+[2024-10-17T13:24:44.443+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2024-10-17T13:24:44.582+0000] {taskinstance.py:3310} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 767, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 406, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/cadastro_de_zonas_dag.py", line 29, in run_spark_task
+    spark = create_spark_session()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/cadastro_de_zonas_dag.py", line 25, in create_spark_session
+    .getOrCreate()
+     ^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/sql/session.py", line 497, in getOrCreate
+    sc = SparkContext.getOrCreate(sparkConf)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/context.py", line 515, in getOrCreate
+    SparkContext(conf=conf or SparkConf())
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/context.py", line 201, in __init__
+    SparkContext._ensure_initialized(self, gateway=gateway, conf=conf)
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/context.py", line 436, in _ensure_initialized
+    SparkContext._gateway = gateway or launch_gateway(conf)
+                                       ^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/java_gateway.py", line 107, in launch_gateway
+    raise PySparkRuntimeError(
+pyspark.errors.exceptions.base.PySparkRuntimeError: [JAVA_GATEWAY_EXITED] Java gateway process exited before sending its port number.
+[2024-10-17T13:24:44.600+0000] {logging_mixin.py:190} INFO - Task instance in failure state
+[2024-10-17T13:24:44.601+0000] {logging_mixin.py:190} INFO - Task start:2024-10-17 13:24:44.264867+00:00 end:2024-10-17 13:24:44.600045+00:00 duration:0.335178
+[2024-10-17T13:24:44.601+0000] {logging_mixin.py:190} INFO - Task:<Task(PythonOperator): generate_parquet> dag:<DAG: pipeline_cadastro_de_zonas> dagrun:<DagRun pipeline_cadastro_de_zonas @ 2024-10-17 13:24:36.518279+00:00: manual__2024-10-17T13:24:36.518279+00:00, state:running, queued_at: 2024-10-17 13:24:36.535863+00:00. externally triggered: True>
+[2024-10-17T13:24:44.602+0000] {logging_mixin.py:190} INFO - Failure caused by [JAVA_GATEWAY_EXITED] Java gateway process exited before sending its port number.
+[2024-10-17T13:24:44.603+0000] {taskinstance.py:1225} INFO - Marking task as UP_FOR_RETRY. dag_id=pipeline_cadastro_de_zonas, task_id=generate_parquet, run_id=manual__2024-10-17T13:24:36.518279+00:00, execution_date=20241017T132436, start_date=20241017T132444, end_date=20241017T132444
+[2024-10-17T13:24:44.629+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2024-10-17T13:24:44.630+0000] {standard_task_runner.py:124} ERROR - Failed to execute job 20 for task generate_parquet ([JAVA_GATEWAY_EXITED] Java gateway process exited before sending its port number.; 107)
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py", line 117, in _start_by_fork
+    ret = args.func(args, dag=self.dag)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/cli_config.py", line 49, in command
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/cli.py", line 115, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 483, in task_run
+    task_return_code = _run_task_by_selected_method(args, _dag, ti)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 256, in _run_task_by_selected_method
+    return _run_raw_task(args, ti)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 341, in _run_raw_task
+    return ti._run_raw_task(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/session.py", line 97, in wrapper
+    return func(*args, session=session, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3004, in _run_raw_task
+    return _run_raw_task(
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 273, in _run_raw_task
+    TaskInstance._execute_task_with_callbacks(
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3158, in _execute_task_with_callbacks
+    result = self._execute_task(context, task_orig)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3182, in _execute_task
+    return _execute_task(self, context, task_orig)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 767, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 406, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/cadastro_de_zonas_dag.py", line 29, in run_spark_task
+    spark = create_spark_session()
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/cadastro_de_zonas_dag.py", line 25, in create_spark_session
+    .getOrCreate()
+     ^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/sql/session.py", line 497, in getOrCreate
+    sc = SparkContext.getOrCreate(sparkConf)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/context.py", line 515, in getOrCreate
+    SparkContext(conf=conf or SparkConf())
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/context.py", line 201, in __init__
+    SparkContext._ensure_initialized(self, gateway=gateway, conf=conf)
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/context.py", line 436, in _ensure_initialized
+    SparkContext._gateway = gateway or launch_gateway(conf)
+                                       ^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pyspark/java_gateway.py", line 107, in launch_gateway
+    raise PySparkRuntimeError(
+pyspark.errors.exceptions.base.PySparkRuntimeError: [JAVA_GATEWAY_EXITED] Java gateway process exited before sending its port number.
+[2024-10-17T13:24:44.674+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 1
+[2024-10-17T13:24:44.693+0000] {taskinstance.py:3900} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-10-17T13:24:44.696+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

@@ -1,0 +1,25 @@
+Setar ambiente AIRFLOW_UID=50000
+
+Iniciar
+docker compose up airflow-init
+
+Levantar
+docker compose up
+
+CLi command
+docker compose run airflow-worker airflow info
+
+The webserver is available at: http://localhost:8080. The default account has the login airflow and the password airflow.
+
+
+ending requests to the REST API
+Basic username password authentication is currently supported for the REST API, which means you can use common tools to send requests to the API.
+
+The webserver is available at: http://localhost:8080. The default account has the login airflow and the password airflow.
+
+Here is a sample curl command, which sends a request to retrieve a pool list:
+
+ENDPOINT_URL="http://localhost:8080/"
+curl -X GET  \
+    --user "airflow:airflow" \
+    "${ENDPOINT_URL}/api/v1/pools"
