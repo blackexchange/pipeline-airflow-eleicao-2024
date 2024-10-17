@@ -22,7 +22,7 @@ RUN mkdir -p /opt/airflow/out /opt/airflow/in && \
 USER airflow
 
 # Instalar o PySpark como usuário airflow
-RUN pip install --no-cache-dir pyspark==3.3.0  # Ajuste para a versão que deseja
+RUN pip install --no-cache-dir pyspark==3.5.3  # Ajuste para a versão que deseja
 
 # Definir o diretório de trabalho para o Airflow
 WORKDIR /opt/airflow
