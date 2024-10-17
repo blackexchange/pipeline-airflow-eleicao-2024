@@ -22,6 +22,9 @@ def create_spark_session():
     """Cria uma sessão Spark"""
     return SparkSession.builder \
         .appName("Processar Arquivos") \
+        .master("local[*]") \
+        .config("spark.executor.memory", "1g")  \
+        .config("spark.driver.memory", "1g")   \
         .config("spark.sql.shuffle.partitions", "2") \
         .getOrCreate()
 
