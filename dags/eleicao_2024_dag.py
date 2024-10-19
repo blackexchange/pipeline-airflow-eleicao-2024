@@ -215,7 +215,7 @@ def prepare_files(params, input_path):
     
     # Parâmetros ajustados para a função
     uf_list = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO', 'ZZ']
-    uf_list = ['TO']
+    uf_list = ['BA']
 
     for uf in uf_list:
         uf_filename = f"bu_imgbu_logjez_rdv_vscmr_{year}_{turn}t_{uf}.zip"
