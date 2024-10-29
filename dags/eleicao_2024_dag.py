@@ -83,11 +83,12 @@ def run_spark_task(input_path: str, output_path: str):
     df = spark.read.csv(input_path + "/**/*.dat", sep='\t', header=False, schema=schema,  encoding='latin1')
 
     df = df.withColumn("DataHora", to_timestamp(df["DataHora"], "dd/MM/yyyy HH:mm:ss"))
+    df = df.withColumn("CodigoUrna", df["CodigoUrna"].cast("int"))
 
     # Filtrar os eventos que correspondem a "Eleitor foi habilitado" e "O voto do eleitor foi computado"
     df_filtered = df.filter(
         (F.col("Acao") =="VOTA") & 
-        (F.col("DataHora") >= "2024-10-06") &
+        (F.col("DataHora") >= "2024-10-27") &
         ((F.col("Mensagem").like("%Eleitor foi habilitado%")) | 
         (F.col("Mensagem").like("%O voto do eleitor foi computado%")))
     )
@@ -109,6 +110,15 @@ def run_spark_task(input_path: str, output_path: str):
         (F.unix_timestamp("Next_DataHora") - F.unix_timestamp("DataHora")).alias("TempoSec")  # Diferença em segundos
 
     )
+
+    df_final = df_final.filter(
+    (F.col("TempoSec") <= 5)) \
+    .groupBy("CodigoUrna","TempoSec") \
+    .agg(F.count("*") \
+    .alias("Ocorrencias_10_sec")) \
+    .orderBy(F.desc("Ocorrencias_10_sec")) \
+    .filter(F.col("Ocorrencias_10_sec") >=10)
+
     #df_final.write.mode("overwrite").parquet(output_path)
     #df_final.coalesce(1).write.mode("append").partitionBy("SG_UF").option("header", "true").parquet(output_path + "/parquet")
     df_final.coalesce(1).write.mode("append").option("header", "true").parquet(output_path + "/parquet")
@@ -215,7 +225,8 @@ def prepare_files(params, input_path):
     
     # Parâmetros ajustados para a função
     uf_list = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO', 'ZZ']
-    uf_list = ['BA']
+    uf_list = ['CE']
+    #TO
 
     for uf in uf_list:
         uf_filename = f"bu_imgbu_logjez_rdv_vscmr_{year}_{turn}t_{uf}.zip"
